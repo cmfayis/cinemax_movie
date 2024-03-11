@@ -45,6 +45,7 @@ dependencies:
   cloud_firestore: ^4.15.8
   ionicons:
   carousel_slider: ^4.2.1
+  http: ^1.2.0
   
 
 dev_dependencies:
