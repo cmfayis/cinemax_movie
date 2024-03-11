@@ -1,11 +1,10 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:movieapp/app/Screens/Auth/view/Login_page.dart';
 import 'package:movieapp/app/Screens/Onboarding/widgets/custom_dots.dart';
 import 'package:movieapp/app/utils/colors.dart';
-import 'package:movieapp/app/utils/images.dart';
-
-import '../../../Model/onboarding_model.dart';
 import '../widgets/custom_Card.dart';
+import '../widgets/onboading_list.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -28,7 +27,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           ),
         ),
         child: Container(
-          padding: EdgeInsets.all(28),
+          padding: const EdgeInsets.all(28),
           decoration:
               BoxDecoration(gradient: AppColors.customOnboardingGradient),
           child: Column(
@@ -50,24 +49,40 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 20),
-              CustomDotsIndicator(
-                dotsCount: onboardingList.length,
-                position: _currentIndex,
+              const SizedBox(height: 40),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CustomDotsIndicator(
+                    dotsCount: onboardingList.length,
+                    position: _currentIndex,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      if (_currentIndex == onboardingList.length - 1) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LoginPage()));
+                      } else {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 500),
+                          curve: Curves.fastOutSlowIn,
+                        );
+                      }
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(12),
+                        decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                            color: AppColors.kPrimary,
+                            shape: BoxShape.rectangle),
+                        margin: const EdgeInsets.only(right: 20),
+                        child: const Icon(Icons.arrow_forward_ios)),
+                  ),
+                ],
               ),
-              const SizedBox(height: 30),
-              ElevatedButton(
-                  onPressed: () {
-                    if (_currentIndex == onboardingList.length - 1) {
-                    } else {
-                      _pageController.nextPage(
-                        duration: const Duration(milliseconds: 500),
-                        curve: Curves.fastOutSlowIn,
-                      );
-                    }
-                  },
-                  child: Text('Continue')),
-              const SizedBox(height: 30),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -75,20 +90,3 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
     );
   }
 }
-
-
-
-List<Onboarding> onboardingList = [
-  Onboarding(
-    bgImage: AppAssets.kOnboardingFirst,
-    title: 'Goods with guaranteed quality',
-    info:
-        'Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem . ',
-  ),
-  Onboarding(
-    bgImage: AppAssets.kOnboardingSecond,
-    title: "Total warranty if the product doesn't fit",
-    info:
-        'Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem . ',
-  ),
-];

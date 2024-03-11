@@ -17,7 +17,7 @@ class CustomDotsIndicator extends StatelessWidget {
       dotsCount: dotsCount,
       position: position,
       decorator: DotsDecorator(
-        color: AppColors.kWhite,
+        color: AppColors.kPrimary,
         size: const Size.square(8.0),
         activeSize: const Size(24, 8),
         activeShape: RoundedRectangleBorder(

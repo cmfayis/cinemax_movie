@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color kPrimary = Color(0xFFD1A661);
+  static const Color kPrimary = Color(0xFF12CDD9);
   static const Color kWhite = Color(0xFFFEFEFE);
+  static const Color KBackground=Color(0xFF1F1D2B);
   static LinearGradient customOnboardingGradient = LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
@@ -11,4 +12,5 @@ class AppColors {
       const Color(0xFF110C1D),
     ],
   );
+  
 }

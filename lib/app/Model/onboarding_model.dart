@@ -8,3 +8,4 @@ class Onboarding {
     required this.info,
   });
 }
+
