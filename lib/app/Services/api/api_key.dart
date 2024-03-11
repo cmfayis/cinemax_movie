@@ -13,9 +13,9 @@ class ApiKey {
       "eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NTVmYzdiZmRkNmVjYWVkMTM2MjQyM2FhODU0MTgwNyIsInN1YiI6IjY1ZWVjZWMzNTk1YTU2MDBjYTNkMjY1NiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.ZHqcGzTUlhayv5RBJT3duXl-rR8lFPa0nnSA3_vApGM";
 
   Future<List<Trending>> getTrendingMovies() async {
-    final reponse = await http.get(Uri.parse(trendinUrl));
-    if (reponse.statusCode == 200) {
-      final decodeData = json.decode(reponse.body)['results'] as List;
+    final response = await http.get(Uri.parse(trendinUrl));
+    if (response.statusCode == 200) {
+      final decodeData = json.decode(response.body)['results'] as List;
       return decodeData.map((movie) => Trending.fromJson(movie)).toList();
     } else {
       throw Exception("something wrong");
