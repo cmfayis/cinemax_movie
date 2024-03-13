@@ -47,27 +47,7 @@ class Trending {
     popularity = json['popularity'];
     releaseDate = json['release_date'];
     video = json['video'];
-    voteAverage = json['vote_average'];
+    voteAverage = json['vote_average'].toDouble();
     voteCount = json['vote_count'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['adult'] = this.adult;
-    data['backdrop_path'] = this.backdropPath;
-    data['id'] = this.id;
-    data['title'] = this.title;
-    data['original_language'] = this.originalLanguage;
-    data['original_title'] = this.originalTitle;
-    data['overview'] = this.overview;
-    data['poster_path'] = this.posterPath;
-    data['media_type'] = this.mediaType;
-    data['genre_ids'] = this.genreIds;
-    data['popularity'] = this.popularity;
-    data['release_date'] = this.releaseDate;
-    data['video'] = this.video;
-    data['vote_average'] = this.voteAverage;
-    data['vote_count'] = this.voteCount;
-    return data;
   }
 }

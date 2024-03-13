@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/app/Controller/Auth/auth_bloc.dart';
+import 'package:movieapp/app/Controller/Home/home_bloc.dart';
 import 'package:movieapp/app/Screens/Onboarding/view/onboarding.dart';
 import 'package:movieapp/firebase_options.dart';
 
@@ -23,12 +24,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => AuthBloc(),
         ),
-        // BlocProvider(
-        //   create: (context) => SubjectBloc(),
-        // ),
+        BlocProvider(
+          create: (context) => HomeBloc(),
+        ),
       ],
       child: MaterialApp(
-        debugShowCheckedModeBanner: true,
+        debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
           fontFamily: 'Plus Jakarta Sans',

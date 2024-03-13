@@ -46,6 +46,7 @@ dependencies:
   ionicons:
   carousel_slider: ^4.2.1
   http: ^1.2.0
+  cached_network_image:
   
 
 dev_dependencies:

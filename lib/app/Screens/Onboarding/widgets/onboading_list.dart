@@ -9,7 +9,7 @@ List<Onboarding> onboardingList = [
         'Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem . ',
   ),
   Onboarding(
-    bgImage: AppAssets.kOnboardingSecond,
+    bgImage: AppAssets.kOnboardingFour,
     title: "Total warranty if the product doesn't fit",
     info:
         'Semper in cursus magna et eu varius nunc adipiscing. Elementum justo, laoreet id sem . ',

@@ -34,10 +34,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         print(e);
       }
     });
-    on<LoginEvent>((event, emit) {
-      auth.signInWithEmailAndPassword(
+    on<LoginEvent>((event, emit) async {
+         auth.signInWithEmailAndPassword(
           email: event.email, password: event.password);
-      emit(SignUpState());
+      // final user = UserCredential.user;
+      // if (user != null) {
+        emit(SignUpState());
+      // }
     });
   }
 }

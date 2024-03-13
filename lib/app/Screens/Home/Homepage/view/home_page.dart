@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:movieapp/app/Model/Tvshow.dart';
 import 'package:movieapp/app/Model/trending.dart';
+import 'package:movieapp/app/Screens/Home/Homepage/widgets/rated_sliders.dart';
+// import 'package:movieapp/app/Screens/Home/Homepage/widgets/rated_sliders.dart';
 import 'package:movieapp/app/Screens/Home/Homepage/widgets/trending_movies.dart';
+import 'package:movieapp/app/Screens/Home/Homepage/widgets/tvshow.dart';
+import 'package:movieapp/app/Screens/Home/Homepage/widgets/upcoming_slider.dart';
 import 'package:movieapp/app/Services/api/api_key.dart';
 
 import 'package:movieapp/app/utils/colors.dart';
@@ -14,20 +19,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late Future<List<Trending>> trendingMovies;
+  late Future<List<Trending>> topRatedMovies;
+  late Future<List<Trending>> upComingMovies;
+  late Future<List<TvShow>> popularTvShow;
   @override
   void initState() {
     super.initState();
     trendingMovies = ApiKey().getTrendingMovies();
+    topRatedMovies = ApiKey().getTopRatedMovies();
+    upComingMovies = ApiKey().getUpComingMovies();
+    popularTvShow = ApiKey().getPopularTvShows();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: AppColors.KBackground,
           title: const Text(
-            'Cinimaxe',
+            'Cinimax',
             style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.w900,
@@ -42,17 +53,19 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            const    Padding(
-                  padding: const EdgeInsets.only(left: 15,bottom: 15,),
+                const Padding(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    bottom: 15,
+                  ),
                   child: Text(
                     "Trending Movies",
                     style: TextStyle(
-                      fontSize: 18,
-                      color: AppColors.kPrimary
-                    ),
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.kPrimary),
                   ),
                 ),
-               
                 SizedBox(
                   child: FutureBuilder(
                     future: trendingMovies,
@@ -63,6 +76,35 @@ class _HomePageState extends State<HomePage> {
                         );
                       } else if (snapshot.hasData) {
                         return TrendingMovies(snapshot: snapshot);
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 19, bottom: 20),
+                  child: Text(
+                    "Top Rated Movies",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.kPrimary),
+                  ),
+                ),
+                SizedBox(
+                  child: FutureBuilder(
+                    future: topRatedMovies,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.hasError.toString()),
+                        );
+                      } else if (snapshot.hasData) {
+                        return TopRatedSlider(snapshot: snapshot);
                       } else {
                         return Center(child: CircularProgressIndicator());
                       }
@@ -75,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                 const Padding(
                   padding: EdgeInsets.only(left: 19, bottom: 20),
                   child: Text(
-                    "Trending Movies",
+                    "Up Coming Movies",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
@@ -83,60 +125,50 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
                 SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            color: Colors.amber,
-                            height: 200,
-                            width: 150,
-                          ),
-                        ),
-                      );
+                  child: FutureBuilder(
+                    future: upComingMovies,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.hasError.toString()),
+                        );
+                      } else if (snapshot.hasData) {
+                        return UpcomingSlider(snapshot: snapshot);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
                     },
                   ),
-                ),
-                const SizedBox(
-                  height: 20,
                 ),
                 const Padding(
-                  padding: EdgeInsets.only(left: 19, bottom: 20),
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    bottom: 15,
+                  ),
                   child: Text(
-                    "Trending Movies",
+                    "Popular Tv Show",
                     style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: AppColors.kPrimary),
                   ),
                 ),
-                SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: 10,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(8),
-                          child: Container(
-                            color: Colors.amber,
-                            height: 200,
-                            width: 150,
-                          ),
-                        ),
-                      );
+                 SizedBox(
+                  child: FutureBuilder(
+                    future: popularTvShow,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.hasError.toString()),
+                        );
+                      } else if (snapshot.hasData) {
+                        return PopularTvShow(snapshot: snapshot);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
                     },
                   ),
-                )
+                ),
               ],
             ),
           ),
