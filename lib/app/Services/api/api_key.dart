@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:movieapp/app/Model/Tvshow.dart';
+import 'package:movieapp/app/Model/cast.dart';
 import 'package:movieapp/app/Model/trending.dart';
 import 'package:http/http.dart' as http;
 
@@ -61,6 +62,17 @@ class ApiKey {
       return decodeData.map((movie) => TvShow.fromJson(movie)).toList();
     } else {
       throw Exception('Something Happend');
+    }
+  }
+
+  Future<List<Cast>> getCast(int movieId) async {
+    final response = await http.get(Uri.parse(
+        "https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=$apiKey"));
+    if (response.statusCode == 200) {
+      final decodeData = json.decode(response.body)['cast'] as List;
+      return decodeData.map((movie) => Cast.fromJson(movie)).toList();
+    } else {
+      throw Exception("Failed to load cast");
     }
   }
 }

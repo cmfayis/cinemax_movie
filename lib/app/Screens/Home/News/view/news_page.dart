@@ -25,17 +25,21 @@ class _NewsPageState extends State<NewsPage> {
         backgroundColor: AppColors.KBackground,
         body: SafeArea(
             child: SingleChildScrollView(
-          child: FutureBuilder(future: news, builder: (context, snapshot) {
-             if (snapshot.hasError) {
-                        return Center(
-                          child: Text(snapshot.hasError.toString()),
-                        );
-                      } else if (snapshot.hasData) {
-                        return NewsDesign(snapshot: snapshot);
-                      } else {
-                        return const Center(child: CircularProgressIndicator());
-                      }
-          },),
+          child: FutureBuilder<List<Article>>(
+            future: news,
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.hasError.toString()),
+                );
+              } else if (snapshot.hasData) {
+                return 
+                NewsDesign(snapshot: snapshot);
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         )));
   }
 }
