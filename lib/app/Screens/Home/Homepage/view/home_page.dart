@@ -111,11 +111,9 @@ class _HomePageState extends State<HomePage> {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+              
                 const Padding(
-                  padding: EdgeInsets.only(left: 19, bottom: 20),
+                  padding: EdgeInsets.only(left: 19,top: 15, bottom: 20),
                   child: Text(
                     "Up Coming Movies",
                     style: TextStyle(
@@ -142,7 +140,8 @@ class _HomePageState extends State<HomePage> {
                 ),
                 const Padding(
                   padding: EdgeInsets.only(
-                    left: 15,
+                    top: 15,
+                    left: 19,
                     bottom: 15,
                   ),
                   child: Text(

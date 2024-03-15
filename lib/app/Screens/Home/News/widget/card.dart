@@ -10,7 +10,6 @@ class NewsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(article.title);
     return Card(
       color: AppColors.KBackground,
       shape: RoundedRectangleBorder(
@@ -21,7 +20,7 @@ class NewsCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           CachedNetworkImage(
-            imageUrl: article.urlToImage?.toString() ?? "",
+            imageUrl: article.urlToImage ?? "", // Check for null
             height: 160,
             width: double.infinity,
             fit: BoxFit.cover,
@@ -30,65 +29,46 @@ class NewsCard extends StatelessWidget {
             errorWidget: (context, url, error) =>
                 const Icon(Icons.error, size: 160),
           ),
-          Container(
-            padding: const EdgeInsets.fromLTRB(15, 15, 15, 0),
+          Padding(
+            padding: const EdgeInsets.all(15),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  article.title,
+                  article.title ?? "",
                   maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 20,
                     color: Colors.white,
                   ),
                 ),
-                Container(height: 10),
+                const SizedBox(height: 10),
                 Text(
-                  article.description?.toString() ?? "No description available",
+                  article.description ?? "No description available",
                   maxLines: 6,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 12,
                     color: Colors.white,
                   ),
                 ),
+                const SizedBox(height: 10),
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
-                    const Spacer(),
                     TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.transparent,
-                      ),
-                      child: const Text(
-                        "",
-                        style: TextStyle(color: Colors.amber),
-                      ),
                       onPressed: () {},
-                    ),
-                    TextButton(
-                      style: TextButton.styleFrom(
-                        foregroundColor: Colors.transparent,
-                      ),
                       child: const Text(
                         "VIEW MORE",
                         style: TextStyle(color: Colors.amber),
                       ),
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) =>
-                        //         NewsDetailsScreen(article: article),
-                        //   ),
-                        // );
-                      },
                     ),
                   ],
                 ),
               ],
             ),
           ),
-          Container(height: 5),
         ],
       ),
     );

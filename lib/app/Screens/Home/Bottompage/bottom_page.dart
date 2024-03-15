@@ -33,7 +33,8 @@ class BottomNavigatonPage extends StatelessWidget {
             backgroundColor: AppColors.KBackground,
             type: BottomNavigationBarType.fixed,
             selectedItemColor: AppColors.kPrimary,
-            selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold),
+            unselectedIconTheme:const IconThemeData(color: AppColors.kWhite),
+            selectedLabelStyle:const TextStyle(fontWeight: FontWeight.bold),
             items:const [
               BottomNavigationBarItem(
                   icon: Icon(Ionicons.home),

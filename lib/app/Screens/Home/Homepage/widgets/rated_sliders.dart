@@ -10,7 +10,9 @@ class TopRatedSlider extends StatelessWidget {
     Key? key,
     required this.snapshot,
   }) : super(key: key);
+
   final AsyncSnapshot snapshot;
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<HomeBloc, HomeState>(
@@ -33,21 +35,22 @@ class TopRatedSlider extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(2),
               child: GestureDetector(
-                onTap: (){
-                       BlocProvider.of<HomeBloc>(context)
-                    .add(NavigateTopRatedEvent(movie: snapshot.data[index]));
+                onTap: () {
+                  BlocProvider.of<HomeBloc>(context)
+                      .add(NavigateTopRatedEvent(movie: snapshot.data[index]));
                 },
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      height: 200,
-                      width: 150,
-                      child: Image.network(
-                        "${ApiKey.imagePath}${snapshot.data[index].posterPath}",
-                        filterQuality: FilterQuality.high,
-                      ),
+                  borderRadius:
+                      BorderRadius.circular(15), // Applying border radius here
+                  child: Container(
+                    height: 200,
+                    width: 150,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                    child: Image.network(
+                      "${ApiKey.imagePath}${snapshot.data[index].posterPath}",
+                      filterQuality: FilterQuality.high,
                     ),
                   ),
                 ),

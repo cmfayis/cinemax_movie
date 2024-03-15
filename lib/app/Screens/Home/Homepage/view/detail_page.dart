@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/app/Model/cast.dart';
+import 'package:movieapp/app/Model/trending.dart';
+import 'package:movieapp/app/Screens/Home/Homepage/widgets/upcoming_slider.dart';
 import 'package:movieapp/app/Services/api/api_key.dart';
 import 'package:movieapp/app/utils/colors.dart';
 
@@ -13,10 +15,12 @@ class DetialPage extends StatefulWidget {
 
 class _DetialPageState extends State<DetialPage> {
   late Future<List<Cast>> cast;
+  late Future<List<Trending>> upComingMovies;
 
   @override
   void initState() {
     super.initState();
+     upComingMovies = ApiKey().getUpComingMovies();
     cast = ApiKey().getCast(widget.movie.id);
   }
 
@@ -136,9 +140,9 @@ class _DetialPageState extends State<DetialPage> {
                   const Text(
                     'Overview',
                     style: TextStyle(
-                      fontSize: 19,
-                      fontWeight: FontWeight.w900,
-                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.kPrimary,
                     ),
                   ),
                   const SizedBox(
@@ -147,17 +151,19 @@ class _DetialPageState extends State<DetialPage> {
                   Text(
                     widget.movie.overview!,
                     style: const TextStyle(
-                      fontSize: 16,
+                      fontSize: 15,
+                      fontFamily: "SansSerif",
                       color: Colors.white,
                     ),
                   ),
                   SizedBox(height: 10,),
               const    Text(
                     'Cast',
-                    style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600),
+                   style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.kPrimary,
+                    ),
                   ),
                   SizedBox(height: 10,),
                   SizedBox(
@@ -212,6 +218,13 @@ class _DetialPageState extends State<DetialPage> {
                                         // fontSize: 14,
                                       ),
                                     ),
+                                    Text(
+                                      snapshot.data![index].character!,
+                                      style: const TextStyle(
+                                        color: AppColors.kWhite,
+                                        fontSize: 10,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               );
@@ -225,6 +238,35 @@ class _DetialPageState extends State<DetialPage> {
                       },
                     ),
                   ),
+                      const Padding(
+                  padding: EdgeInsets.only(
+                    left: 15,
+                    bottom: 15,
+                  ),
+                  child: Text(
+                    "More Like ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.kPrimary),
+                  ),
+                ),
+                    SizedBox(
+                  child: FutureBuilder(
+                    future: upComingMovies,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.hasError.toString()),
+                        );
+                      } else if (snapshot.hasData) {
+                        return UpcomingSlider(snapshot: snapshot);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ),
                 ],
               ),
             ),

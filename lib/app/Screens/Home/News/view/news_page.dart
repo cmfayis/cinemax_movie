@@ -22,6 +22,12 @@ class _NewsPageState extends State<NewsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: true,
+        title: Text("Trending News",style: TextStyle(fontWeight: FontWeight.w600,fontSize: 25,color: AppColors.kPrimary),),
+          backgroundColor: AppColors.KBackground,
+      ),
         backgroundColor: AppColors.KBackground,
         body: SafeArea(
             child: SingleChildScrollView(
@@ -33,8 +39,8 @@ class _NewsPageState extends State<NewsPage> {
                   child: Text(snapshot.hasError.toString()),
                 );
               } else if (snapshot.hasData) {
-                return 
-                NewsDesign(snapshot: snapshot);
+                print(snapshot.data);
+                return NewsCard(snapshot: snapshot);
               } else {
                 return const Center(child: CircularProgressIndicator());
               }

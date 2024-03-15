@@ -4,9 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:movieapp/app/Model/news.dart';
 
 class NewsService {
-  static const String apiKey = '0dc0c55f2a5e4dcfae8b2a951d87b7a2';
+  static const String apiKey = '0093cbfabec54415a81a535efc9001a2';
   static const String baseUrl =
-      'https://newsapi.org/v2/everything?q=tesla&from=2024-02-13&sortBy=publishedAt&apiKey=';
+      'https://newsapi.org/v2/top-headlines?country=in&category=entertainment&apiKey=';
 
   Future<List<Article>> getEntertainmentNews() async {
     final response = await http.get(Uri.parse("${baseUrl}${apiKey}"));
