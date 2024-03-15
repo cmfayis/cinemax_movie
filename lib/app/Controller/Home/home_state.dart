@@ -29,3 +29,9 @@ class NavigateTvShowState extends HomeState {
     required this.movie,UpComing
   });
 }
+class NavigateToSimilar extends HomeState {
+    final movie;
+  NavigateToSimilar({
+    required this.movie,UpComing
+  });
+}

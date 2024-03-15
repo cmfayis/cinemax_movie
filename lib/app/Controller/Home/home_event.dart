@@ -29,3 +29,10 @@ class NavigateTvShowEvent extends HomeEvent {
   });
   
 }
+class SimilarMoviesEvent extends HomeEvent {
+  final Trending movie;
+  SimilarMoviesEvent({
+    required this.movie,
+  });
+  
+}

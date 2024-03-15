@@ -75,4 +75,27 @@ class ApiKey {
       throw Exception("Failed to load cast");
     }
   }
+
+  Future<List<Trending>> getSimilarMovies(int movieId) async {
+    final response = await http.get(Uri.parse(
+        "https://api.themoviedb.org/3/movie/$movieId/similar?api_key=$apiKey"));
+    if (response.statusCode == 200) {
+      final decodeData = json.decode(response.body)['results'] as List;
+      return decodeData.map((movie) => Trending.fromJson(movie)).toList();
+    } else {
+      throw Exception("Failed to load cast");
+    }
+  }
+
+  static const malayalamUrl =
+      'https://api.themoviedb.org/3/discover/movie?api_key=f495adcbdf28ad96fdf954a0df47a539&with_original_language=ml';
+  Future<List<Trending>> getMalayamLanguage() async {
+    final response = await http.get(Uri.parse(malayalamUrl));
+    if (response.statusCode == 200) {
+      final decodeData = jsonDecode(response.body)['results'] as List;
+      return decodeData.map((movie) => Trending.fromJson(movie)).toList();
+    } else {
+      throw Exception('Something Happend');
+    }
+  }
 }

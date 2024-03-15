@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:movieapp/app/Model/cast.dart';
 import 'package:movieapp/app/Model/trending.dart';
 import 'package:movieapp/app/Screens/Home/Homepage/widgets/similar_movies.dart';
-import 'package:movieapp/app/Screens/Home/Homepage/widgets/upcoming_slider.dart';
+
 import 'package:movieapp/app/Services/api/api_key.dart';
 import 'package:movieapp/app/utils/colors.dart';
 
-class DetialPage extends StatefulWidget {
-  const DetialPage({Key? key, required this.movie}) : super(key: key);
+class MoreDetialPage extends StatefulWidget {
+   MoreDetialPage({Key? key, required this.movie}) : super(key: key);
   final movie;
 
   @override
-  State<DetialPage> createState() => _DetialPageState();
+  State<MoreDetialPage> createState() => _MoreDetialPageState();
 }
 
-class _DetialPageState extends State<DetialPage> {
+class _MoreDetialPageState extends State<MoreDetialPage> {
   late Future<List<Cast>> cast;
   late Future<List<Trending>> similarMovies;
 

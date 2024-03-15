@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/app/Model/Tvshow.dart';
 import 'package:movieapp/app/Model/trending.dart';
+import 'package:movieapp/app/Screens/Home/Homepage/widgets/malayalam_movies.dart';
 import 'package:movieapp/app/Screens/Home/Homepage/widgets/rated_sliders.dart';
 // import 'package:movieapp/app/Screens/Home/Homepage/widgets/rated_sliders.dart';
 import 'package:movieapp/app/Screens/Home/Homepage/widgets/trending_movies.dart';
@@ -18,6 +19,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+   late Future<List<Trending>> malayalam;
   late Future<List<Trending>> trendingMovies;
   late Future<List<Trending>> topRatedMovies;
   late Future<List<Trending>> upComingMovies;
@@ -25,6 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    malayalam=ApiKey().getMalayamLanguage();
     trendingMovies = ApiKey().getTrendingMovies();
     topRatedMovies = ApiKey().getTopRatedMovies();
     upComingMovies = ApiKey().getUpComingMovies();
@@ -105,6 +108,32 @@ class _HomePageState extends State<HomePage> {
                         );
                       } else if (snapshot.hasData) {
                         return TopRatedSlider(snapshot: snapshot);
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ),
+                 const Padding(
+                  padding: EdgeInsets.only(left: 19, bottom: 20),
+                  child: Text(
+                    "Malayalam Movies",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.kPrimary),
+                  ),
+                ),
+                SizedBox(
+                  child: FutureBuilder(
+                    future: malayalam,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        return Center(
+                          child: Text(snapshot.hasError.toString()),
+                        );
+                      } else if (snapshot.hasData) {
+                        return MalayalamMovies(snapshot: snapshot);
                       } else {
                         return Center(child: CircularProgressIndicator());
                       }

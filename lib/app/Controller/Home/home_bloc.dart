@@ -16,8 +16,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<NavigateUpComingEvent>((event, emit) {
       emit(NavigateUpComingState(movie: event.movie));
     });
-     on<NavigateTvShowEvent>((event, emit) {
+    on<NavigateTvShowEvent>((event, emit) {
       emit(NavigateTvShowState(movie: event.movie));
+    });
+    on<SimilarMoviesEvent>((event, emit) {
+      emit(NavigateToSimilar(movie: event.movie));
     });
   }
 }
