@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movieapp/app/Model/cast.dart';
 import 'package:movieapp/app/Model/trending.dart';
-import 'package:movieapp/app/Screens/Home/Homepage/widgets/similar_movies.dart';
-
+import 'package:movieapp/app/Screens/Home/Homepage/widgets/custom_slider.dart';
 import 'package:movieapp/app/Services/api/api_key.dart';
 import 'package:movieapp/app/utils/colors.dart';
 
@@ -265,7 +264,7 @@ class _MoreDetialPageState extends State<MoreDetialPage> {
                             child: Text(snapshot.hasError.toString()),
                           );
                         } else if (snapshot.hasData) {
-                          return SimilarMovies(snapshot: snapshot);
+                          return TopRatedSlider(snapshot: snapshot);
                         } else {
                           return Center(child: CircularProgressIndicator());
                         }
