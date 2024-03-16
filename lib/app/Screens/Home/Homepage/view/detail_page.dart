@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:movieapp/app/Model/cast.dart';
 import 'package:movieapp/app/Model/trending.dart';
@@ -32,13 +34,16 @@ class _DetialPageState extends State<DetialPage> {
         slivers: [
           SliverAppBar(
             backgroundColor: AppColors.KBackground,
-            expandedHeight: MediaQuery.of(context).size.height / 2,
+            expandedHeight: MediaQuery.of(context).size.height / 3,
             pinned: true,
             leading: IconButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.arrow_back_ios),
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Colors.white,
+              ),
             ),
             automaticallyImplyLeading: false,
             flexibleSpace: FlexibleSpaceBar(
@@ -132,6 +137,25 @@ class _DetialPageState extends State<DetialPage> {
                           ],
                         ),
                       ),
+                      SizedBox(
+                        width: 140,
+                      ),
+                      IconButton(
+                          onPressed: () {
+                            FirebaseFirestore.instance
+                                .collection('wishlist')
+                                .doc()
+                                .set({
+                              "movie": widget.movie.title ?? widget.movie.name,
+                              "image": widget.movie.backdropPath,
+                              "description": widget.movie.overview,
+                            });
+                          },
+                          icon: const Icon(
+                            Icons.favorite,
+                            color: Colors.red,
+                            size: 25,
+                          ))
                     ],
                   ),
                   const SizedBox(
@@ -171,7 +195,7 @@ class _DetialPageState extends State<DetialPage> {
                     height: 10,
                   ),
                   SizedBox(
-                    height: 180,
+                    height: 200,
                     child: FutureBuilder<List<Cast>>(
                       future: cast,
                       builder: (context, snapshot) {
@@ -194,8 +218,8 @@ class _DetialPageState extends State<DetialPage> {
                                 child: Column(
                                   children: [
                                     Container(
-                                      height: 100,
-                                      width: 80,
+                                      height: 120,
+                                      width: 100,
                                       decoration: BoxDecoration(
                                         shape: BoxShape.rectangle,
                                         image: DecorationImage(

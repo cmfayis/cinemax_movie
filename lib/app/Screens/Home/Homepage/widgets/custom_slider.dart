@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/app/Controller/Home/home_bloc.dart';
-import 'package:movieapp/app/Model/trending.dart'; // Import Trending model
 import 'package:movieapp/app/Services/api/api_key.dart';
 
 class TopRatedSlider extends StatelessWidget {
@@ -22,22 +21,16 @@ class TopRatedSlider extends StatelessWidget {
         itemCount: snapshot.data!.length,
         itemBuilder: (context, index) {
           return Padding(
-            padding: const EdgeInsets.all(2),
+            padding: const EdgeInsets.all(5),
             child: GestureDetector(
               onTap: () {
-                final movie =
-                    snapshot.data![index]; // Access the movie correctly
-                BlocProvider.of<HomeBloc>(context).add(NavigateEvent(
-                    movie: movie)); // Pass the movie to the event
+                final movie = snapshot.data![index];
+                BlocProvider.of<HomeBloc>(context)
+                    .add(NavigateEvent(movie: movie));
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(15),
-                child: Container(
-                  height: 200,
-                  width: 150,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15)),
-                  ),
+                child: SizedBox(
                   child: Image.network(
                     "${ApiKey.imagePath}${snapshot.data![index].posterPath}",
                     filterQuality: FilterQuality.high,

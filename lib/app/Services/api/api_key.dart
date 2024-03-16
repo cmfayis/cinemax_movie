@@ -98,4 +98,23 @@ class ApiKey {
       throw Exception('Something Happend');
     }
   }
+List<Map<String ,dynamic>>searchResult=[];
+  static const search =
+      "https://api.themoviedb.org/3/search/movie?api_key=855fc7bfdd6ecaed1362423aa8541807&query=";
+  Future <void> searchMovie(String movieName) async {
+    final response = await http.get(Uri.parse(search + movieName));
+    if (response.statusCode == 200) {
+      final decodeData = json.decode(response.body)['results'] as List;
+    for (var item in decodeData) {
+      searchResult.add({
+        "id":item['id'],
+        "title":item['title'],
+        "posterPath":item['poster_path'],
+      });
+      print(searchResult);
+    }
+    } else {
+      throw Exception("Failed to load cast");
+    }
+  }
 }
