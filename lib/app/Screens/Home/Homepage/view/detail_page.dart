@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:movieapp/app/Model/cast.dart';
+import 'package:movieapp/app/Model/trailermodel.dart';
 import 'package:movieapp/app/Model/trending.dart';
 import 'package:movieapp/app/Screens/Home/Homepage/widgets/custom_slider.dart';
+import 'package:movieapp/app/Screens/Home/Homepage/widgets/trailers.dart';
 import 'package:movieapp/app/Services/api/api_key.dart';
 import 'package:movieapp/app/utils/colors.dart';
 
@@ -17,11 +20,14 @@ class DetialPage extends StatefulWidget {
 
 class _DetialPageState extends State<DetialPage> {
   late Future<List<Cast>> cast;
+  late Future<TrailerModel> trailer;
   late Future<List<Trending>> similarMovies;
+  List<Map<String, dynamic>> movieTrailerList = [];
 
   @override
   void initState() {
     super.initState();
+    trailer = ApiKey().trailer(widget.movie.id);
     similarMovies = ApiKey().getSimilarMovies(widget.movie.id);
     cast = ApiKey().getCast(widget.movie.id);
   }
@@ -52,13 +58,24 @@ class _DetialPageState extends State<DetialPage> {
                   bottomLeft: Radius.circular(24),
                   bottomRight: Radius.circular(24),
                 ),
-                child: Image.network(
-                  "${ApiKey.imagePath}${widget.movie.backdropPath}",
-                  filterQuality: FilterQuality.high,
-                  fit: BoxFit.cover,
+                child: FutureBuilder<TrailerModel>(
+                  future: trailer,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Trailer(videoId: snapshot.data!.results[0].key);
+                    } else if (snapshot.hasError) {
+                      return Image.network(
+                        "${ApiKey.imagePath}${widget.movie.backdropPath}",
+                        filterQuality: FilterQuality.high,
+                        fit: BoxFit.cover,
+                      );
+                    }
+
+                    return const CircularProgressIndicator();
+                  },
                 ),
               ),
-              title: Text(widget.movie.title ?? widget.movie.name),
+              // title: Text(widget.movie.title ?? widget.movie.name),
             ),
           ),
           SliverToBoxAdapter(
@@ -142,13 +159,18 @@ class _DetialPageState extends State<DetialPage> {
                       ),
                       IconButton(
                           onPressed: () {
+                            User? user = FirebaseAuth.instance.currentUser;
                             FirebaseFirestore.instance
                                 .collection('wishlist')
+                                .doc(user!.uid)
+                                .collection('movies')
                                 .doc()
                                 .set({
                               "movie": widget.movie.title ?? widget.movie.name,
                               "image": widget.movie.backdropPath,
                               "description": widget.movie.overview,
+                              // "movieId":widget.movie.id,
+                              // 'movies':widget.movie,
                             });
                           },
                           icon: const Icon(
@@ -180,18 +202,32 @@ class _DetialPageState extends State<DetialPage> {
                       color: Colors.white,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  const Text(
-                    'Cast',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.kPrimary,
+                  const Padding(
+                    padding: EdgeInsets.only(right: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Cast ",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.kPrimary),
+                        ),
+                        Text(
+                          "See All ",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.kPrimary),
+                        ),
+                      ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   SizedBox(
@@ -206,7 +242,7 @@ class _DetialPageState extends State<DetialPage> {
                         } else if (snapshot.hasData) {
                           return ListView.separated(
                             separatorBuilder: (context, index) {
-                              return SizedBox(
+                              return const SizedBox(
                                 width: 15,
                               );
                             },
@@ -259,7 +295,7 @@ class _DetialPageState extends State<DetialPage> {
                             },
                           );
                         } else {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -267,17 +303,29 @@ class _DetialPageState extends State<DetialPage> {
                     ),
                   ),
                   const Padding(
-                    padding: EdgeInsets.only(
-                      left: 15,
-                      bottom: 15,
+                    padding: EdgeInsets.only(right: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Related Movies ",
+                          style: TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.kPrimary),
+                        ),
+                        Text(
+                          "See All ",
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.kPrimary),
+                        ),
+                      ],
                     ),
-                    child: Text(
-                      "More Like ",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.kPrimary),
-                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                   SizedBox(
                     child: FutureBuilder(
@@ -290,7 +338,8 @@ class _DetialPageState extends State<DetialPage> {
                         } else if (snapshot.hasData) {
                           return TopRatedSlider(snapshot: snapshot);
                         } else {
-                          return Center(child: CircularProgressIndicator());
+                          return const Center(
+                              child: CircularProgressIndicator());
                         }
                       },
                     ),

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:movieapp/app/Model/Tvshow.dart';
 import 'package:movieapp/app/Model/cast.dart';
+import 'package:movieapp/app/Model/trailermodel.dart';
 import 'package:movieapp/app/Model/trending.dart';
 import 'package:http/http.dart' as http;
 
@@ -114,6 +115,18 @@ class ApiKey {
       return searchResult;
     } else {
       throw Exception("Failed to load cast");
+    }
+  }
+  Future<TrailerModel> trailer(int id) async {
+    var movieTrailerUrl =
+        "https://api.themoviedb.org/3/movie/$id/videos?api_key=855fc7bfdd6ecaed1362423aa8541807";
+
+    var movieTrailerResponse = await http.get(Uri.parse(movieTrailerUrl));
+    if (movieTrailerResponse.statusCode == 200) {
+      var movieTrailerJson = jsonDecode(movieTrailerResponse.body);
+      return TrailerModel.fromJson(movieTrailerJson);
+    } else {
+      throw Exception('Failed to load movie trailer');
     }
   }
 }

@@ -48,6 +48,7 @@ dependencies:
   http: ^1.2.0
   cached_network_image:
   youtube_player_flutter: ^9.0.0
+
   
 
 dev_dependencies:

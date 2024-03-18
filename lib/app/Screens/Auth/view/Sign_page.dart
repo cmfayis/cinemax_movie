@@ -26,8 +26,11 @@ class _SignUpPageState extends State<SignUpPage> {
       body: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (state is SignUpState) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => BottomNavigatonPage()));
+             Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => BottomNavigatonPage()),
+              (Route<dynamic> route) => false,
+            );
           }
         },
         child: Stack(

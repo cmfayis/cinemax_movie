@@ -18,7 +18,7 @@ class BottomNavigatonPage extends StatelessWidget {
    const SearchPage(),
    const NewsPage(),
    const WishListPage(),
-   const ProfilePage(),
+   const Profile(),
   ];
 
   BottomNavigationBloc BottomNavigatonPageBloc = BottomNavigationBloc();

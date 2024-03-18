@@ -30,8 +30,11 @@ class _LoginPageState extends State<LoginPage> {
                 context, MaterialPageRoute(builder: (context) => SignUpPage()));
           }
           if (state is SignUpState) {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => BottomNavigatonPage()));
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => BottomNavigatonPage()),
+              (Route<dynamic> route) => false,
+            );
           }
         },
         child: Stack(
