@@ -35,14 +35,16 @@ class _SearchPageState extends State<SearchPage> {
       backgroundColor: AppColors.KBackground,
       appBar: AppBar(
         backgroundColor: AppColors.KBackground,
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        title: const Text(
-          "Search",
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 28,
-            color: AppColors.kWhite,
+        automaticallyImplyLeading: false,  
+        title:const Padding(
+          padding:  EdgeInsets.only(left: 15),
+          child:  Text(
+            "Search ..",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              color: AppColors.kWhite,
+            ),
           ),
         ),
       ),
@@ -72,6 +74,7 @@ class _SearchPageState extends State<SearchPage> {
                   });
                 },
                 decoration: InputDecoration(
+                  contentPadding: const EdgeInsets.only(top: 0, left: 20),
                   suffixIcon: const Icon(
                     Icons.search_rounded,
                     color: AppColors.kPrimary,
@@ -82,12 +85,9 @@ class _SearchPageState extends State<SearchPage> {
                   fillColor: const Color.fromARGB(255, 143, 134, 134),
                   filled: true,
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+                    borderRadius: BorderRadius.circular(15.0),
                     borderSide:
-                        const BorderSide(color: AppColors.kPrimary, width: 2.0),
+                        BorderSide(color: AppColors.kPrimary, width: 2.0),
                   ),
                 ),
                 style: const TextStyle(color: AppColors.kWhite),
