@@ -45,5 +45,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(SignUpState());
       }
     });
+     on<CheckLoginStatusEvent>((event, emit) async {
+      User? users;
+      try {
+        await Future.delayed(const Duration(seconds: 2), () {
+          users = auth.currentUser;
+        });
+        if (users != null) {
+     
+          emit(AuthenticatedState());
+        } else {
+          emit(UnAuthenticatedState());
+        }
+      } catch (e) {
+        emit(ErrorAuthenctionState(error: e.toString()));
+      }
+    });
   }
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/app/Controller/Auth/auth_bloc.dart';
 import 'package:movieapp/app/Controller/Home/home_bloc.dart';
-import 'package:movieapp/app/Screens/Onboarding/view/onboarding.dart';
+import 'package:movieapp/app/Screens/Splash/splash.dart';
 import 'package:movieapp/firebase_options.dart';
 
 void main() async {
@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Plus Jakarta Sans',
           useMaterial3: true,
         ),
-        home: const OnBoardingScreen(),
+        home: const SplashPageWrapper(),
       ),
     );
   }

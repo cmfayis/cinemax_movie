@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:movieapp/app/Model/cast.dart';
 import 'package:movieapp/app/Model/trailermodel.dart';
@@ -71,7 +70,11 @@ class _DetialPageState extends State<DetialPage> {
                       );
                     }
 
-                    return const CircularProgressIndicator();
+                    return Image.network(
+                      "${ApiKey.imagePath}${widget.movie.backdropPath}",
+                      filterQuality: FilterQuality.high,
+                      fit: BoxFit.cover,
+                    );
                   },
                 ),
               ),

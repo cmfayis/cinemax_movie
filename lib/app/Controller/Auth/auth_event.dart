@@ -4,7 +4,7 @@ part of 'auth_bloc.dart';
 sealed class AuthEvent {}
 
 class ForgotPasswordEvent extends AuthEvent {}
-
+class CheckLoginStatusEvent extends AuthEvent {}
 class SignUpPageEvent extends AuthEvent {}
 
 class SignUpEvent extends AuthEvent {
