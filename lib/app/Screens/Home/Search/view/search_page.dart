@@ -7,7 +7,6 @@ import 'package:movieapp/app/Screens/Home/Search/widget/search_slider.dart';
 import 'package:movieapp/app/Services/api/api_key.dart';
 import 'package:movieapp/app/utils/colors.dart';
 
-import '../../Homepage/widgets/custom_slider.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({

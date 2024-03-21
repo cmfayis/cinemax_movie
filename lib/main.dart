@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movieapp/app/Controller/Auth/auth_bloc.dart';
 import 'package:movieapp/app/Controller/Home/home_bloc.dart';
-import 'package:movieapp/app/Controller/profile/profile_bloc.dart';
+import 'package:movieapp/app/Controller/bloc/profile_bloc.dart';
+
 import 'package:movieapp/app/Screens/Splash/splash.dart';
 import 'package:movieapp/firebase_options.dart';
 
@@ -23,7 +24,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SettingBloc(),
+          create: (context) => ProfileBloc(),
         ),
         BlocProvider(
           create: (context) => AuthBloc(),

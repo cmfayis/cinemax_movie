@@ -6,8 +6,8 @@ import 'package:meta/meta.dart';
 part 'profile_event.dart';
 part 'profile_state.dart';
 
-class SettingBloc extends Bloc<SettingEvent, SettingState> {
-  SettingBloc() : super(SettingInitial()) {
+class ProfileBloc extends Bloc<ProfileEvent, ProfileState> {
+  ProfileBloc() : super(ProfileInitial()) {
     on<intialEvent>((event, emit) async {
       User? user = FirebaseAuth.instance.currentUser;
       QuerySnapshot<Map<String, dynamic>> userData = await FirebaseFirestore
@@ -15,17 +15,15 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
           .collection("Users")
           .where("uid", isEqualTo: user!.uid)
           .get();
-      if (userData.docs.isNotEmpty) {
-        final Email = userData.docs.last.get('Email');
-        final Name = userData.docs.last.get('Name');
 
-        emit(FetchState(
-          name: Name,
-          email: Email,
-        ));
-      }
+      final Email = userData.docs.first.get('Email');
+      final Name = userData.docs.first.get('Name');
+      emit(FetchState(
+        name: Name,
+        email: Email,
+      ));
     });
-        on<LogoutEvent>((event, emit) {
+    on<LogoutEvent>((event, emit) {
       FirebaseAuth.instance.signOut();
       emit(LogoutState());
     });
